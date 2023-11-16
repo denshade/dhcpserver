@@ -1,4 +1,4 @@
-package org.example;
+package info.thelaboflieven;
 
 import java.net.*;
 
@@ -15,7 +15,9 @@ public class DHCPServer {
 
             while (true) {
                 DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+
                 socket.receive(receivePacket);
+                System.out.println(new String(receiveData));
                 /*
                 // Process received DHCP packet
                 DHCP_Packet requestPacket = processReceivedPacket(receivePacket.getData());
