@@ -37,7 +37,7 @@ package info.thelaboflieven.dhcp;
 
  */
 public record DHCPRequest (MessageOpCode messageOpCode, HardWareAddressType hardWareAddressType,
-                          HardwareAddressLength length, byte hops, int transactionId, short clientElapsedSecs,
+                          int hardwareAddressLength, byte hops, int transactionId, short clientElapsedSecs,
                            Flags flags,
                            IpAddress clientIpaddress, IpAddress yourClientIpAddress, IpAddress nextServerInBootStrap,
                            IpAddress relayIpaddress, ClientHardwareAddress clientAddress, String file, String options){

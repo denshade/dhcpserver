@@ -19,5 +19,8 @@ class PacketParserTest {
         var request = new  PacketParser().parse(dhcpRequest);
         assertEquals(request.messageOpCode(), MessageOpCode.BOOTREQUEST);
         assertEquals(request.hardWareAddressType(), HardWareAddressType.ETHERNET);
+        assertEquals(request.hardwareAddressLength(), 6);
+        assertEquals(request.hops(), 0);
+
     }
 }
