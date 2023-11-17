@@ -26,6 +26,14 @@ public enum HardWareAddressType {
         HardWareAddressType(int value) {
             this.value = value;
         }
+        public static HardWareAddressType fromByte(byte code) {
+                for (HardWareAddressType opCode : HardWareAddressType.values()) {
+                        if (opCode.value == code) {
+                                return opCode;
+                        }
+                }
+                throw new IllegalArgumentException("Invalid HardWareAddressType byte value: " + code);
+        }
 
         public int getValue() {
             return value;
