@@ -23,6 +23,7 @@ public class DHCPServer {
                 DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
                 socket.receive(receivePacket);
                 respondToDiscoverIfPresent(socket, receivePacket, DEFAULT_SERVER_ID, DEFAULT_OFFER_YIADDR);
+                respondToRequestIfPresent(socket, receivePacket, DEFAULT_SERVER_ID);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,6 +47,27 @@ public class DHCPServer {
         DatagramPacket sendPacket = new DatagramPacket(
                 offer,
                 offer.length,
+                receivePacket.getAddress(),
+                receivePacket.getPort());
+        socket.send(sendPacket);
+    }
+
+    /**
+     * If the datagram is a DHCPREQUEST for this server (option 54 matches), sends a DHCPACK.
+     */
+    static void respondToRequestIfPresent(
+            DatagramSocket socket,
+            DatagramPacket receivePacket,
+            byte[] serverIdentifier) throws java.io.IOException {
+        byte[] data = receivePacket.getData();
+        int len = receivePacket.getLength();
+        byte[] ack = DhcpPacketHandler.createAckIfRequest(data, len, serverIdentifier);
+        if (ack == null) {
+            return;
+        }
+        DatagramPacket sendPacket = new DatagramPacket(
+                ack,
+                ack.length,
                 receivePacket.getAddress(),
                 receivePacket.getPort());
         socket.send(sendPacket);
